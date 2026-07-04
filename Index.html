@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-Fath | Rumah Binaan Ma'had Al-Azhar</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Setup Warna Custom Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: '#6b363d',
+            cream: '#fff6ea',
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'serif'],
+            body: ['Outfit', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Playfair Display (Elegan) & Outfit (Modern Clean) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ANIMASI BACKGROUND BERGERAK */
+    body {
+      background: linear-gradient(-45deg, #fff6ea, #f9e6df, #fff6ea, #f2d8d8);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* GLASSMORPHISM - Transparan Elegan sesuai ciri khas Al-Fath */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 32px 0 rgba(107, 54, 61, 0.1);
+    }
+    .glass-maroon {
+      background: rgba(107, 54, 61, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(107, 54, 61, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(107, 54, 61, 0.3);
+    }
+
+    /* ANIMASI SCROLL (FADE UP) */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ANIMASI LOADING MASKOT ELANG TERBANG (WHOOSH) */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background-color: #fff6ea;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity 0.5s ease-out;
+    }
+    .eagle-fly {
+      width: 250px;
+      /* Animasi masuk dari kanan, ngerem di tengah, melesat ke kiri */
+      animation: swoopIn 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    @keyframes swoopIn {
+      0% { transform: translate(100vw, 20vh) scale(0.5) rotate(-15deg); opacity: 0; }
+      40% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+      60% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+      100% { transform: translate(-100vw, -20vh) scale(1.5) rotate(15deg); opacity: 0; }
+    }
+
+    /* MASKOT MELAYANG DI WEB (FLOATING) */
+    .float-anim {
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+  </style>
+</head>
+<body class="font-body text-gray-800 overflow-x-hidden">
+
+  <!-- ================= LOADING SCREEN (WHOOSH ANIMATION) ================= -->
+  <div id="preloader">
+    <!-- MASKOT LOADING DI SINI: Ganti src dengan gambar elang mengepakkan sayap -->
+    <img src="https://cdn3d.iconscout.com/3d/premium/thumb/eagle-4994511-4161833.png" alt="Maskot Elang Terbang" class="eagle-fly drop-shadow-2xl object-contain">
+  </div>
+
+  <!-- ================= NAVBAR (GLASSMORPHISM) ================= -->
+  <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass-card">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <!-- LOGO AL-FATH DI SINI -->
+        <div class="w-10 h-10 bg-maroon rounded-full flex items-center justify-center text-cream font-heading font-bold text-xl shadow-lg">AF</div>
+        <span class="font-heading font-bold text-2xl text-maroon tracking-wide">Al-Fath</span>
+      </div>
+      <div class="hidden md:flex gap-8 font-semibold text-maroon/80">
+        <a href="#profil" class="hover:text-maroon transition">Profil</a>
+        <a href="#filosofi" class="hover:text-maroon transition">Filosofi</a>
+        <a href="#visi-misi" class="hover:text-maroon transition">Visi Misi</a>
+        <a href="#program" class="hover:text-maroon transition">Program</a>
+      </div>
+      <a href="#program" class="bg-maroon text-cream px-6 py-2 rounded-full font-semibold shadow-lg hover:bg-[#52292f] hover:scale-105 transition-all">Daftar Nanti</a>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <!-- Dekorasi Lingkaran Blur di Background -->
+    <div class="absolute top-20 -left-20 w-96 h-96 bg-maroon/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-[30rem] h-[30rem] bg-orange-300/20 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+      
+      <!-- Teks Kiri -->
+      <div class="fade-up space-y-6">
+        <div class="inline-block px-4 py-1 rounded-full glass-card text-maroon font-bold text-sm tracking-widest uppercase shadow-sm">
+          Segera Hadir Agustus 2026
+        </div>
+        <h1 class="font-heading text-5xl md:text-7xl font-bold text-maroon leading-tight">
+          Langkah Awal <br> <span class="italic text-[#8c4c54]">Kemenangan</span> Ilmu.
+        </h1>
+        <p class="text-lg text-gray-700 leading-relaxed max-w-lg">
+          Rumah Binaan eksklusif bagi pelajar Ma'had Al-Azhar di Mesir. Membangun generasi berilmu, beradab, dan siap memimpin umat dari jantung peradaban Islam.
+        </p>
+        <div class="pt-4 flex gap-4">
+          <a href="#profil" class="bg-maroon text-cream px-8 py-3 rounded-full font-bold shadow-xl hover:bg-[#52292f] hover:-translate-y-1 transition-all">Kenali Al-Fath</a>
+        </div>
+      </div>
+
+      <!-- Kanan: Penempatan Maskot Pose 1 -->
+      <div class="relative fade-up flex justify-center mt-10 md:mt-0">
+        <!-- Lingkaran Transparan di belakang maskot -->
+        <div class="absolute w-72 h-72 md:w-96 md:h-96 glass-card rounded-full -z-10"></div>
+        
+        <!-- MASKOT POSE 1 DI SINI (Contoh: Pose Gagah/Menyambut) -->
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/eagle-4994511-4161833.png" alt="Maskot Elang Al-Fath" class="w-80 md:w-[28rem] object-contain float-anim drop-shadow-[0_20px_30px_rgba(107,54,61,0.4)]">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROFIL & FILOSOFI ================= -->
+  <section id="profil" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Penempatan Maskot Pose 2 -->
+      <div class="lg:col-span-5 relative fade-up hidden lg:block">
+        <!-- MASKOT POSE 2 DI SINI (Contoh: Pose Bijaksana/Membaca Buku/Melihat Jauh) -->
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/eagle-4994511-4161833.png" alt="Maskot Bijaksana" class="w-full object-contain drop-shadow-2xl transform -scale-x-100">
+      </div>
+
+      <!-- Teks Kanan Transparan -->
+      <div class="lg:col-span-7 space-y-8 fade-up">
+        
+        <!-- Kotak Profil -->
+        <div class="glass-card p-8 md:p-10 rounded-3xl relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-2 h-full bg-maroon"></div>
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-maroon mb-4">Profil Al-Fath</h2>
+          <p class="text-gray-700 leading-relaxed text-justify">
+            <strong class="text-maroon">Al-Fath</strong> adalah Rumah Binaan bagi pelajar Ma'had Al-Azhar di Mesir yang menghadirkan lingkungan belajar, pembinaan, dan pendampingan secara menyeluruh. Kami percaya bahwa keberhasilan seorang penuntut ilmu tidak hanya ditentukan oleh kecerdasan, tetapi juga oleh lingkungan yang baik, adab yang kokoh, kedisiplinan, dan pembiasaan yang dilakukan secara konsisten.
+          </p>
+          <p class="text-gray-700 leading-relaxed text-justify mt-3">
+            Melalui pembinaan yang terstruktur, pendampingan musyrif, penguatan Al-Qur'an, penguasaan ilmu dasar, pengembangan kepemimpinan, serta pelatihan keterampilan hidup, Al-Fath berkomitmen membentuk generasi yang berilmu, berakhlak, mandiri, dan siap memberikan manfaat bagi umat.
+          </p>
+        </div>
+
+        <!-- Kotak Filosofi -->
+        <div id="filosofi" class="glass-maroon p-8 md:p-10 rounded-3xl text-cream fade-up relative overflow-hidden">
+          <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">Makna Kemenangan</h2>
+          <p class="text-cream/90 leading-relaxed text-justify">
+            <strong>Al-Fath</strong> bermakna pembukaan dan kemenangan. Nama ini menjadi doa agar setiap penghuni memperoleh pembukaan dari Allah—terbukanya pintu ilmu, adab, keberkahan, dan kesempatan untuk terus bertumbuh menjadi pribadi yang lebih baik.
+          </p>
+          <p class="text-cream/90 leading-relaxed text-justify mt-3">
+            Bagi kami, kemenangan sejati bukan hanya tentang prestasi akademik, tetapi tentang lahirnya insan yang berilmu, beradab, bertanggung jawab, serta mampu mengamalkan ilmunya untuk memberi manfaat bagi agama, keluarga, dan masyarakat. Itulah nilai yang menjadi ruh setiap proses pembinaan di Al-Fath.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISI & MISI ================= -->
+  <section id="visi-misi" class="py-24 relative overflow-hidden">
+    <!-- Hiasan Background -->
+    <div class="absolute inset-0 bg-maroon/5 skew-y-3 transform origin-bottom-left -z-10"></div>
+    
+    <div class="max-w-7xl mx-auto px-6 text-center fade-up">
+      <h2 class="font-heading text-4xl md:text-5xl font-bold text-maroon mb-16">Visi & Misi</h2>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Kolom Visi -->
+      <div class="md:col-span-1 glass-maroon p-10 rounded-[2rem] text-cream flex flex-col justify-center fade-up hover:-translate-y-2 transition-transform duration-300">
+        <h3 class="font-heading text-3xl font-bold mb-6 border-b border-cream/30 pb-4">Visi Kami</h3>
+        <p class="text-lg leading-relaxed">
+          Menjadi rumah pembinaan yang melahirkan generasi penuntut ilmu yang berakhlak mulia, berlandaskan nilai-nilai Islam, unggul dalam keilmuan, berjiwa kepemimpinan, serta mampu memberikan manfaat bagi umat.
+        </p>
+      </div>
+
+      <!-- Kolom Misi -->
+      <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 fade-up">
+        <div class="glass-card p-6 rounded-3xl hover:bg-white/60 transition-colors">
+          <div class="w-12 h-12 bg-maroon/10 rounded-2xl flex items-center justify-center text-maroon text-2xl font-bold mb-4">1</div>
+          <p class="text-gray-800 text-sm leading-relaxed">Menyelenggarakan lingkungan pembinaan yang islami, kondusif, dan penuh keteladanan, sebagai tempat terbaik bagi tumbuhnya karakter seorang penuntut ilmu.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl hover:bg-white/60 transition-colors">
+          <div class="w-12 h-12 bg-maroon/10 rounded-2xl flex items-center justify-center text-maroon text-2xl font-bold mb-4">2</div>
+          <p class="text-gray-800 text-sm leading-relaxed">Membangun pondasi keilmuan yang kokoh melalui penguatan Al-Qur'an, ilmu-ilmu syar'i, bahasa Arab, serta pendampingan akademik secara terarah.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl hover:bg-white/60 transition-colors">
+          <div class="w-12 h-12 bg-maroon/10 rounded-2xl flex items-center justify-center text-maroon text-2xl font-bold mb-4">3</div>
+          <p class="text-gray-800 text-sm leading-relaxed">Menanamkan nilai adab, disiplin, tanggung jawab, dan kemandirian sebagai budaya hidup sehari-hari.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl hover:bg-white/60 transition-colors">
+          <div class="w-12 h-12 bg-maroon/10 rounded-2xl flex items-center justify-center text-maroon text-2xl font-bold mb-4">4</div>
+          <p class="text-gray-800 text-sm leading-relaxed">Mengembangkan jiwa kepemimpinan, keterampilan hidup, dan potensi setiap peserta agar siap menghadapi tantangan di masa depan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROGRAM UTAMA & KURIKULUM (CARD GRID TRANSPARAN) ================= -->
+  <section id="program" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="text-center fade-up mb-16 relative">
+        <h2 class="font-heading text-4xl md:text-5xl font-bold text-maroon mb-6">Program & Kurikulum</h2>
+        <p class="text-gray-700 max-w-2xl mx-auto">
+          Dirancang untuk membentuk peserta didik secara menyeluruh melalui enam bidang pembinaan utama yang saling melengkapi.
+        </p>
+        
+        <!-- MASKOT POSE 3 DI SINI (Contoh: Pose Menunjuk/Mengajar) -->
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/eagle-4994511-4161833.png" alt="Maskot Mengajar" class="absolute -top-16 -right-10 w-32 md:w-48 object-contain drop-shadow-xl animate-pulse hidden md:block">
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Program 1 -->
+        <div class="glass-card p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-maroon text-cream rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-maroon mb-3">Pembinaan Ruhiyah</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Shalat berjamaah</li>
+            <li>Dzikir dan doa harian</li>
+            <li>Tilawah Al-Qur'an harian</li>
+            <li>Pembinaan akhlak Islami</li>
+            <li>Muhasabah ibadah</li>
+          </ul>
+        </div>
+
+        <!-- Program 2 -->
+        <div class="glass-maroon p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-cream text-maroon rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-cream mb-3">Pembinaan Akademik</h3>
+          <ul class="space-y-2 text-sm text-cream/80 list-disc list-inside">
+            <li>Pendampingan materi Ma'had</li>
+            <li>Persiapan masuk Univ. Al-Azhar</li>
+            <li>Penguatan Bahasa Arab</li>
+            <li>Bimbingan belajar & evaluasi</li>
+            <li>Pembiasaan budaya disiplin</li>
+          </ul>
+        </div>
+
+        <!-- Program 3 -->
+        <div class="glass-card p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-maroon text-cream rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-maroon mb-3">Tahfiz & Matan</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Target hafalan terukur</li>
+            <li>Setoran & mutaba'ah hafalan</li>
+            <li>Dauroh & muraja'ah terprogram</li>
+            <li>Menghafal matan ilmu syar'i</li>
+            <li>Evaluasi capaian hafalan</li>
+          </ul>
+        </div>
+
+        <!-- Program 4 -->
+        <div class="glass-card p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-maroon text-cream rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-maroon mb-3">Pembinaan Karakter</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Disiplin & tanggung jawab</li>
+            <li>Adab kehidupan sehari-hari</li>
+            <li>Kerja sama & komunikasi</li>
+            <li>Penguatan jiwa kepemimpinan</li>
+            <li>Mentoring habit positif</li>
+          </ul>
+        </div>
+
+        <!-- Program 5 -->
+        <div class="glass-card p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-maroon text-cream rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-maroon mb-3">Keterampilan Life Skill</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Manajemen waktu diri</li>
+            <li>Pelatihan Public Speaking</li>
+            <li>Penguatan literasi digital</li>
+            <li>Keterampilan memasak</li>
+            <li>Kemampuan praktis lainnya</li>
+          </ul>
+        </div>
+
+        <!-- Program 6 -->
+        <div class="glass-card p-8 rounded-3xl fade-up group hover:-translate-y-2 transition-all">
+          <div class="w-14 h-14 bg-maroon text-cream rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M110 4.318A9.026 9.026 0 0012 3c-1.255 0-2.443.29-3.5.804A9.026 9.026 0 003 12c0 1.255.29 2.443.804 3.5A9.026 9.026 0 0012 21c1.255 0 2.443-.29 3.5-.804A9.026 9.026 0 0021 12c0-1.255-.29-2.443-.804-3.5A9.026 9.026 0 0012 3zm0 0V9m0 0l3 3m-3-3l-3 3"></path></svg>
+          </div>
+          <h3 class="font-heading text-2xl font-bold text-maroon mb-3">Pendampingan Personal</h3>
+          <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside">
+            <li>Evaluasi musyrif berkala</li>
+            <li>Konseling & bimbingan</li>
+            <li>Komunikasi aktif ke orang tua</li>
+            <li>Pendampingan akademik intens</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="glass-maroon text-cream pt-16 pb-8 border-t border-maroon/50 relative overflow-hidden">
+    <!-- MASKOT POSE 4 DI SINI (Contoh: Pose Sayap Menutup/Santai di pojok bawah) -->
+    <img src="https://cdn3d.iconscout.com/3d/premium/thumb/eagle-4994511-4161833.png" alt="Maskot Istirahat" class="absolute bottom-0 right-10 w-40 md:w-56 object-contain opacity-50">
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 bg-cream text-maroon rounded-full flex items-center justify-center font-heading font-bold text-xl">AF</div>
+          <span class="font-heading font-bold text-2xl tracking-wide">Al-Fath</span>
+        </div>
+        <p class="text-cream/80 text-sm max-w-sm">
+          Rumah binaan eksklusif untuk pelajar Ma'had Al-Azhar di Mesir. Membina akhlak, membangun peradaban.
+        </p>
+      </div>
+      <div class="md:text-right flex flex-col justify-center">
+        <h4 class="font-bold mb-2">Informasi Pendaftaran</h4>
+        <p class="text-cream/80 text-sm mb-4">Penerimaan angkatan pertama dibuka bulan Agustus 2026.</p>
+        <div>
+          <span class="inline-block px-4 py-2 bg-cream text-maroon font-bold rounded-full text-sm shadow-md cursor-pointer hover:scale-105 transition-transform">Hubungi Kami</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-cream/50 text-xs mt-12 pt-6 border-t border-cream/10 relative z-10">
+      &copy; 2026 Al-Fath Rumah Binaan Mesir. Hak Cipta Dilindungi.
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. ANIMASI LOADING (WHOOSH ELANG)
+      const preloader = document.getElementById('preloader');
+      
+      // Tunggu animasi CSS swoopIn selesai (sekitar 2.5 detik)
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          
+          // Setelah loading hilang, jalankan efek muncul (Fade Up) untuk elemen di layar
+          triggerScrollAnimation();
+        }, 500); // Waktu memudar transisi
+      }, 2500);
+
+      // 2. ANIMASI SCROLL INTERSECTION OBSERVER (Fade Up)
+      const fadeElements = document.querySelectorAll('.fade-up');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Opsional: unobserve jika ingin animasi hanya jalan 1x
+            // observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1, // Trigger saat 10% elemen terlihat
+        rootMargin: "0px 0px -50px 0px"
+      });
+
+      function triggerScrollAnimation() {
+        fadeElements.forEach(el => observer.observe(el));
+      }
+
+    });
+  </script>
+</body>
+</html>
